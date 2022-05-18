@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const db = require('../db.json');
+const fetch = require('node-fetch');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,35 +11,45 @@ module.exports = {
         let toNextTier = '';
         let points = 0;
 
-        db.roles.forEach(item => {
-           if (item.role !== '') {
-               if (interaction.member.roles.cache.some(role => role.id === `${item.role}`)) {
-                   points = points + item.points;
-               }
-           }
-        });
+        fetch('https://riofriz.github.io/gblsts-alpha/db.json')
+            .then(res => res.json())
+            .then(
 
-        db.alpha.forEach(a => {
-            if (points < 50) {
-                assignedRoles = `You have ${points} points, unfortunately that's not enough to join any of the Alpha tiers.`;
-            }
+                json => {
+                    json.roles.forEach(item => {
+                        if (item.role !== '') {
+                            if (interaction.member.roles.cache.some(role => role.id === `${item.role}`)) {
+                                points = points + item.points;
+                            }
+                        }
+                    });
 
-            if (points >= a.requirement) {
-                tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
-                interaction.member.roles.add(tier);
-                assignedRoles += " `"+a.name+"`";
+                    json.alpha.forEach(a => {
+                        if (points < 50) {
+                            assignedRoles = `You have ${points} points, unfortunately that's not enough to join any of the Alpha tiers.`;
+                        }
 
-                if (a.nextTierPrice !== null) {
-                    toNextTier = `. You will need **${a.nextTierPrice - points} points** to access the next tier`;
-                } else {
-                    toNextTier = `.`;
+                        if (points >= a.requirement) {
+                            tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
+                            interaction.member.roles.add(tier);
+                            assignedRoles += " `"+a.name+"`";
+
+                            if (a.nextTierPrice !== null) {
+                                toNextTier = `. You will need **${a.nextTierPrice - points} points** to access the next tier`;
+                            } else {
+                                toNextTier = `.`;
+                            }
+                        } else {
+                            tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
+                            interaction.member.roles.remove(tier);
+                        }
+                    });
+
+                    return interaction.reply({content: `${assignedRoles}${toNextTier}`, ephemeral: true});
                 }
-            } else {
-                tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
-                interaction.member.roles.remove(tier);
-            }
-        });
 
-        return interaction.reply({content: `${assignedRoles}${toNextTier}`, ephemeral: true});
+            ).catch(err => {
+            console.error('error:' + err);
+        });
     },
 };
