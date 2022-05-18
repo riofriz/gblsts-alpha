@@ -1,0 +1,38 @@
+[
+  {
+    "name":"psychonautz",
+    "cost" : 0.0555,
+    "points": 50,
+    "role": "968579247574769664"
+  },
+  {
+    "name":"HWA",
+    "cost" : 0.1,
+    "points": 50,
+    "role": "968579420304592937"
+  },
+  {
+    "name": "OSPrism",
+    "cost": 0.5,
+    "points":100,
+    "role": "970840169039142912"
+  },
+  {
+    "name":"ideations",
+    "cost" : 1.1,
+    "points": 300,
+    "role": "968578694396395551"
+  },
+  {
+    "name":"goldloxe",
+    "cost" : 0.07,
+    "points": 75,
+    "role": ""
+  },
+  {
+    "name": "SRPrism",
+    "cost": 0.9,
+    "points": 300,
+    "role": "976192680163958784"
+  }
+]
