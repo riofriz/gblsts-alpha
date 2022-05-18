@@ -1,40 +1,67 @@
 {
-"roles": [
-  {
-    "name":"psychonautz",
-    "cost" : 0.0555,
-    "points": 50,
-    "role": "968579247574769664"
-  },
-  {
-    "name":"HWA",
-    "cost" : 0.1,
-    "points": 50,
-    "role": "968579420304592937"
-  },
-  {
-    "name": "OSPrism",
-    "cost": 0.5,
-    "points":100,
-    "role": "970840169039142912"
-  },
-  {
-    "name":"ideations",
-    "cost" : 1.1,
-    "points": 300,
-    "role": "968578694396395551"
-  },
-  {
-    "name":"goldloxe",
-    "cost" : 0.07,
-    "points": 75,
-    "role": ""
-  },
-  {
-    "name": "SRPrism",
-    "cost": 0.9,
-    "points": 300,
-    "role": "976192680163958784"
-  }
-]
+  "roles": [
+    {
+      "name":"psychonautz",
+      "cost" : 0.0555,
+      "points": 50,
+      "role": "968579247574769664"
+    },
+    {
+      "name":"HWA",
+      "cost" : 0.1,
+      "points": 50,
+      "role": "968579420304592937"
+    },
+    {
+      "name": "ToNoFcoke",
+      "cost": 0.05,
+      "points": 50,
+      "role": "968579001553657877"
+    },
+    {
+      "name": "OSPrism",
+      "cost": 0.5,
+      "points":100,
+      "role": "970840169039142912"
+    },
+    {
+      "name":"ideations",
+      "cost" : 1.1,
+      "points": 300,
+      "role": "968578694396395551"
+    },
+    {
+      "name":"goldloxe",
+      "cost" : 0.07,
+      "points": 75,
+      "role": ""
+    },
+    {
+      "name": "SRPrism",
+      "cost": 0.9,
+      "points": 300,
+      "role": "976192680163958784"
+    }
+  ],
+
+  "alpha" : [
+    {
+      "requirement": 50,
+      "nextTierPrice": 150,
+      "name": "Tier 1",
+      "role" : "976501320435503114"
+    },
+    {
+      "requirement": 150,
+      "nextTierPrice": 300,
+      "name": "Tier 2",
+      "role" : "976501376618217543"
+    },
+    {
+      "requirement": 300,
+      "nextTierPrice": null,
+      "name": "Tier 3",
+      "role" : "976501407010144327"
+    }
+  ]
 }

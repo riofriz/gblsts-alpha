@@ -6,12 +6,9 @@ module.exports = {
         .setName('alpha')
         .setDescription('Gives you access to Alpha tiers depending on your collection!'),
     async execute(interaction) {
-        let tier1 = interaction.guild.roles.cache.find(r => r.id === "976501320435503114");
-        let tier2 = interaction.guild.roles.cache.find(r => r.id === "976501376618217543");
-        let tier3 = interaction.guild.roles.cache.find(r => r.id === "976501407010144327");
+        let tier;
         let assignedRoles = `You have been assigned to these Alpha tiers: `;
         let toNextTier = '';
-
         let points = 0;
 
         db.roles.forEach(item => {
@@ -22,28 +19,26 @@ module.exports = {
            }
         });
 
+        db.alpha.forEach(a => {
+            if (points < 50) {
+                assignedRoles = `You have ${points} points, unfortunately that's not enough to join any of the Alpha tiers.`;
+            }
 
-        if (points < 50) {
-            assignedRoles = `You have ${points} points, unfortunately that's not enough to join any of the Alpha tiers.`;
-        }
+            if (points >= a.requirement) {
+                tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
+                interaction.member.roles.add(tier);
+                assignedRoles += " `"+a.name+"`";
 
-        if (points >= 50) {
-            interaction.member.roles.add(tier1);
-            assignedRoles += `\`Tier 1\``;
-            toNextTier = `. You will need **${135-points} points** to access the next tier`;
-        }
-
-        if (points >= 135) {
-            interaction.member.roles.add(tier2);
-            assignedRoles += `, \`Tier 2\``;
-            toNextTier = `. You will need **${175-points} points** to access the next tier`;
-        }
-
-        if (points >= 300) {
-            interaction.member.roles.add(tier3);
-            assignedRoles += `, \`Tier 3\``;
-            toNextTier = `.`;
-        }
+                if (a.nextTierPrice !== null) {
+                    toNextTier = `. You will need **${a.nextTierPrice - points} points** to access the next tier`;
+                } else {
+                    toNextTier = `.`;
+                }
+            } else {
+                tier = interaction.guild.roles.cache.find(r => r.id === `${a.role}`);
+                interaction.member.roles.remove(tier);
+            }
+        });
 
         return interaction.reply({content: `${assignedRoles}${toNextTier}`, ephemeral: true});
     },

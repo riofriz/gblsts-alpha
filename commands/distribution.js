@@ -9,10 +9,17 @@ module.exports = {
         .setDescription('Shows how points are distributed across the various GBLSTS projects!'),
     async execute(interaction) {
         let distribution = ``;
+        let alpha = ``
 
         db.roles.forEach(item => {
             if (item.role !== '') {
                 distribution += `[${item.points} Points] - <@&${item.role}>\n`
+            }
+        });
+
+        db.alpha.forEach(a => {
+            if (a.role !== '') {
+                alpha += `${a.requirement}+ Points: <@&${a.role}>\n`
             }
         });
 
@@ -23,7 +30,7 @@ module.exports = {
                 value: `${distribution}`,
             },{
                     name: `Tiers`,
-                    value: `50+ Points: <@&976501320435503114>\n135+ Points: <@&976501376618217543>\n300+ Points: <@&976501407010144327>`
+                    value: `${alpha}`
             });
 
         return interaction.reply({embeds: [tiers], ephemeral: true});
