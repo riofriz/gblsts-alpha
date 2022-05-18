@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const collections = require('../roles.json');
+const db = require('../db.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ module.exports = {
 
         let points = 0;
 
-        collections.forEach(item => {
+        db.roles.forEach(item => {
            if (item.role !== '') {
                if (interaction.member.roles.cache.some(role => role.id === `${item.role}`)) {
                    points = points + item.points;

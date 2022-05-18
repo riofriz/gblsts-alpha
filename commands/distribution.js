@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const collections = require('../roles.json');
+const db = require('../db.json');
 const Discord = require("discord.js");
 const ethers = require("ethers");
 
@@ -10,7 +10,7 @@ module.exports = {
     async execute(interaction) {
         let distribution = ``;
 
-        collections.forEach(item => {
+        db.roles.forEach(item => {
             if (item.role !== '') {
                 distribution += `[${item.points} Points] - <@&${item.role}>\n`
             }
